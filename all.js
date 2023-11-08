@@ -78,11 +78,11 @@ init();
 let search = document.querySelector('.regionSearch');
 search.addEventListener('change', function (e)
 {
-  // console.log(e.target.value);
+  // console.log(search.value);
   let newData = [];
-  if (e.target.value == '')
+  if (e.target.value == "")
   {
-    newDaa = data;
+    newData = data;
   }
   else
   {
