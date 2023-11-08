@@ -30,3 +30,92 @@ let data = [
     "rate": 7
   }
 ];
+function updateData(data)
+{
+  let str = '';
+  let list = document.querySelector('.ticketCard-area');
+  let searchResultQty = document.querySelector('#searchResult-text');
+  data.forEach(function (item)
+  {
+    str += ` <li class="ticketCard">
+    <div class="ticketCard-img">
+      <a href="#">
+        <img src=${item.imgUrl}
+          alt="">
+      </a>
+      <div class="ticketCard-region">${item.area}</div>
+      <div class="ticketCard-rank">${item.rate}</div>
+    </div>
+    <div class="ticketCard-content">
+      <div>
+        <h3>
+          <a href="#" class="ticketCard-name">${item.name}</a>
+        </h3>
+        <p class="ticketCard-description">
+          ${item.description}
+        </p>
+      </div>
+      <div class="ticketCard-info">
+        <p class="ticketCard-num">
+          <span><i class="fas fa-exclamation-circle"></i></span>
+          剩下最後 <span id="ticketCard-num"> ${item.group} </span> 組
+        </p>
+        <p class="ticketCard-price">
+          TWD <span id="ticketCard-price">$${item.price}</span>
+        </p>
+      </div>
+    </div>
+  </li>`;
+  });
+  list.innerHTML = str;
+  searchResultQty.textContent = `本次搜尋共 ${data.length} 筆資料`;
+}
+function init()
+{
+  updateData(data);
+}
+init();
+let search = document.querySelector('.regionSearch');
+search.addEventListener('change', function (e)
+{
+  // console.log(e.target.value);
+  let newData = [];
+  if (e.target.value == '')
+  {
+    newDaa = data;
+  }
+  else
+  {
+    data.forEach(function (item)
+    {
+      if (item.area == e.target.value)
+      {
+        newData.push(item);
+      }
+    });
+  }
+  updateData(newData);
+});
+let addTicketBtn = document.querySelector('.addTicket-btn');
+addTicketBtn.addEventListener('click', function (e)
+{
+  let ticketName = document.querySelector('#ticketName');
+  let imgUrl = document.querySelector('#ticketImgUrl');
+  let area = document.querySelector('#ticketRegion');
+  let ticketPrice = document.querySelector('#ticketPrice');
+  let ticketNum = document.querySelector('#ticketNum');
+  let ticketRate = document.querySelector('#ticketRate');
+  let ticketDescription = document.querySelector('#ticketDescription');
+  let addData = {
+    "id": data.length,
+    "name": ticketName.value,
+    "imgUrl": imgUrl.value,
+    "area": area.value,
+    "description": ticketDescription.value,
+    "group": ticketNum.value,
+    "price": ticketPrice.value,
+    "rate": ticketRate.value
+  };
+  data.push(addData);
+  updateData(data);
+});
